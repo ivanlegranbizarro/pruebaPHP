@@ -111,11 +111,15 @@ class PersonajeDBZ
 
   static public function devolverNumeroPersonajesDeCadaRaza(): string
   {
-    $personajesPorRaza = [];
+    $personajesDeCadaRaza = [];
     foreach (self::$personajes as $personaje) {
-      $personajesPorRaza[$personaje->getRaza()] = $personaje;
+      foreach (RazaDBZ::cases() as $raza) {
+        if ($personaje->raza == $raza) {
+          $personajesDeCadaRaza[$raza->value] = count(self::$personajes);
+        }
+      }
     }
-    return implode(", ", $personajesPorRaza);
+    return implode(", ", $personajesDeCadaRaza);
   }
 }
 
