@@ -109,7 +109,7 @@ class PersonajeDBZ
     return $ataqueMasFuerte;
   }
 
-  public function devolverNumeroPersonajesDeCadaRaza(): string
+  static public function devolverNumeroPersonajesDeCadaRaza(): string
   {
     $personajesPorRaza = [];
     foreach (self::$personajes as $personaje) {
@@ -126,3 +126,7 @@ $personaje1 = new PersonajeDBZ("Goku", 100, RazaDBZ::SuperGuerrer, ["Kamehameha"
 $personaje2 = new PersonajeDBZ("Vegeta", 100, RazaDBZ::SuperGuerrer, ["Kamehameha" => 500, "SuperKamehameha" => 1000]);
 
 echo $personaje1->obtenerElAtaqueMasFuerte();
+
+echo '<br>';
+
+echo PersonajeDBZ::devolverNumeroPersonajesDeCadaRaza();
