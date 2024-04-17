@@ -1,81 +1,87 @@
 <?php
 
 
-enum Raza: string
+enum RazasZ: string
 {
-  case Humano = "Humano";
-  case Namekiano = "Namekiano";
-  case Superguerrer = "Superguerrer";
-  case Androide = "Androide";
+  case Humano = 'Humano';
+  case Androide = 'Androide';
+  case Namekiano = 'Namekiano';
+  case Superguerrer = 'Superguerrer';
+  case FamiliaFreezer = 'FamiliaFreezer';
 }
 
-class GuerreroZ
+class Guerrero
 {
   public function __construct(
     public string $nombre,
     public int $edad,
-    public Raza $raza,
+    public RazasZ $raza,
     public array $ataques
   ) {
   }
 
-  public function mostrarAtaqueMasFuerte(): string
+  public function ataqueMasFuerte(): string
   {
-    $poderMax = 0;
-
+    $poderTotal = 0;
     foreach ($this->ataques as $nombre => $poder) {
-      if ($poder > $poderMax) {
-        $poderMax = $poder;
+      if ($poder > $poderTotal) {
+        $poderTotal = $poder;
       }
     }
-    return  "El ataque más fuerte es: $nombre con un poder de $poderMax";
+    return "El ataque {$nombre} es el más poderoso con {$poder} de poder";
   }
 
-  public function __toString(): string
+
+  public function __toString()
   {
     return $this->nombre;
   }
 }
 
-class PlanetaVegeta
-{
-  static public array $poblacionZ = [];
 
-  static public function registrarGuerrero(GuerreroZ $guerrero): void
+class ReinoZ
+{
+
+  static public array $guerrerosZ = [];
+
+  static public function addGuerreros(Guerrero $guerrero): void
   {
-    self::$poblacionZ[] = $guerrero;
+    self::$guerrerosZ[] = $guerrero;
   }
 
-  static public function recuentoGuerrerosPorRaza(Raza $raza): array
+  static public function recuentoGuerrerosZPorTipo(RazasZ $raza): array|string
   {
-    $conteoPersonajes = [];
-    foreach (self::$poblacionZ as $guerrero) {
+    $conteoPersonajeZeta = [];
+
+    foreach (self::$guerrerosZ as $guerrero) {
       if ($guerrero->raza == $raza) {
         $razaActual = $guerrero->raza->value;
-        if ($conteoPersonajes[$razaActual]) {
-          $conteoPersonajes[$razaActual]++;
+        if ($conteoPersonajeZeta[$razaActual]) {
+          $conteoPersonajeZeta[$razaActual]++;
         } else {
-          $conteoPersonajes[$razaActual] = 1;
+          $conteoPersonajeZeta[$razaActual] = 1;
         }
       }
     }
-    return $conteoPersonajes;
+    if (!empty($conteoPersonajeZeta)) {
+      return $conteoPersonajeZeta;
+    } else {
+      return 'No hay guerreros de esa raza';
+    }
   }
 }
 
+$guerrero1 = new Guerrero('Goku', 20, RazasZ::Humano, ['Ataque1' => 100, 'Ataque2' => 500]);
 
-$goku = new GuerreroZ("Goku", 17, Raza::Humano, ["KameHame" => 100, "SuperKameHame" => 500]);
 
-$vegeta = new GuerreroZ("Vegeta", 17, Raza::Humano, ["CanoGarlick" => 100, "FinalFlash" => 500]);
-echo $goku;
-
-echo '<br>';
-
-echo $goku->mostrarAtaqueMasFuerte();
-
-echo PlanetaVegeta::registrarGuerrero($goku);
-echo PlanetaVegeta::registrarGuerrero($vegeta);
+echo $guerrero1;
 
 echo '<br>';
 
-print_r(PlanetaVegeta::recuentoGuerrerosPorRaza(Raza::Humano));
+echo  $guerrero1->ataqueMasFuerte();
+
+ReinoZ::addGuerreros($guerrero1);
+
+echo '<br>';
+
+echo ReinoZ::recuentoGuerrerosZPorTipo(RazasZ::Androide);
