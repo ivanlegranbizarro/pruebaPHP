@@ -64,6 +64,34 @@ Practica con frecuencia para mejorar tus habilidades de programación.
 ¡Mucha suerte en la repesca del examen!
 
 
+------------------------------------------------
 
 
-Gemini puede mostrar información imprecisa (incluidos datos sobre personas), así que comprueba sus respuestas. Tu privacidad y
+¡Claro! Aquí tienes algunos ejercicios similares para practicar Programación Orientada a Objetos (POO), bucles y arrays multidimensionales:
+
+Registro de Estudiantes:
+
+Crea una clase Estudiante con propiedades como nombre, edad, curso y notas.
+Implementa un método para calcular el promedio de las notas del estudiante.
+Crea una clase Escuela que tenga un array de estudiantes y métodos para agregar estudiantes y calcular el promedio de notas de todos los estudiantes.
+Gestión de Empleados:
+
+Define una clase Empleado con propiedades como nombre, salario y departamento.
+Implementa un método para calcular el salario después de un aumento.
+Crea una clase Empresa que tenga un array de empleados y métodos para agregar empleados, calcular la masa salarial total y dar un aumento a todos los empleados de un departamento específico.
+Gestión de Productos:
+
+Crea una clase Producto con propiedades como nombre, precio y cantidad en stock.
+Implementa métodos para restar y sumar stock, así como para calcular el valor total del inventario.
+Crea una clase Tienda que tenga un array de productos y métodos para agregar productos, vender productos y calcular el valor total del inventario.
+Sistema de Reservas de Vuelos:
+
+Define una clase Vuelo con propiedades como origen, destino, fecha y precio.
+Implementa métodos para calcular la duración del vuelo y verificar si hay disponibilidad en una fecha específica.
+Crea una clase Aeropuerto que tenga un array de vuelos y métodos para agregar vuelos, buscar vuelos por destino y calcular el precio promedio de los vuelos.
+Gestión de Biblioteca:
+
+Crea una clase Libro con propiedades como título, autor, género y disponibilidad.
+Implementa métodos para prestar y devolver libros, así como para buscar libros por autor o género.
+Crea una clase Biblioteca que tenga un array de libros y métodos para agregar libros, buscar libros por título y listar todos los libros disponibles.
+Estos ejercicios te permitirán practicar la creación y manipulación de objetos, así como el uso de bucles y arrays multidimensionales para gestionar datos de manera eficiente. ¡Espero que te resulten útiles! Si necesitas más detalles sobre alguno en particular, ¡no dudes en preguntar!

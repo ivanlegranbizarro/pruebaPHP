@@ -27,8 +27,8 @@ class GuerreroZ
       if ($poder > $poderMax) {
         $poderMax = $poder;
       }
-      return  "El ataque más fuerte es: $nombre con un poder de $poderMax";
     }
+    return  "El ataque más fuerte es: $nombre con un poder de $poderMax";
   }
 
   public function __toString(): string
