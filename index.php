@@ -1,136 +1,61 @@
 <?php
 
-
-enum RazaDBZ
+enum Raza: string
 {
-  case Humano;
-  case Namekiano;
-  case Androide;
-  case Dios;
-  case SuperGuerrer;
+  case SUPERGUERRERO = "superguerrero";
+  case HUMANO = "humano";
+  case ANDROIDE = "androide";
+  case NAMEKIANO = "namekiano";
 }
 
-class PersonajeDBZ
+class GuerreroZ
 {
+  private static $guerreros = [];
 
-  static array $personajes = [];
 
-  public function __construct(
-    private string $nombre,
-    private int $edad,
-    private RazaDBZ $raza,
-    private array $ataques
-  ) {
-    self::$personajes[] = $this;
+  public function __construct(private string $nombre, private int $edad, private array $ataques, private Raza $raza)
+  {
+
+    self::$guerreros[] = $this;
   }
 
-  /**
-   * Get the value of nombre
-   */
-  public function getNombre(): string
+  public function ataqueMasPoderoso(): string
   {
-    return $this->nombre;
+    return max(array_map(function ($nombre, $valor) {
+      return "$nombre:$valor";
+    }, $this->ataques));
   }
 
-  /**
-   * Set the value of nombre
-   */
-  public function setNombre(string $nombre): self
+  static public function cuantosPersonajesPorRaza(): array
   {
-    $this->nombre = $nombre;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of edad
-   */
-  public function getEdad(): int
-  {
-    return $this->edad;
-  }
-
-  /**
-   * Set the value of edad
-   */
-  public function setEdad(int $edad): self
-  {
-    $this->edad = $edad;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of raza
-   */
-  public function getRaza(): RazaDBZ
-  {
-    return $this->raza;
-  }
-
-  /**
-   * Set the value of raza
-   */
-  public function setRaza(RazaDBZ $raza): self
-  {
-    $this->raza = $raza;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of ataques
-   */
-  public function getAtaques(): array
-  {
-    return $this->ataques;
-  }
-
-  /**
-   * Set the value of ataques
-   */
-  public function setAtaques(array $ataques): self
-  {
-    $this->ataques = $ataques;
-
-    return $this;
-  }
-
-  public function obtenerElAtaqueMasFuerte(): string
-  {
-    $maxPoder = 0;
-    $ataqueMasFuerte = "";
-    foreach ($this->ataques as $ataque => $poder) {
-      if ($poder > $maxPoder) {
-        $maxPoder = $poder;
-        $ataqueMasFuerte = $ataque;
+    $conteoPersonajes = [];
+    foreach (self::$guerreros as $guerrero) {
+      $razaActual = $guerrero->raza->value;
+      if ($conteoPersonajes[$razaActual]) {
+        $conteoPersonajes[$razaActual]++;
+      } else {
+        $conteoPersonajes[$razaActual] = 1;
       }
     }
-    return $ataqueMasFuerte;
+    return $conteoPersonajes;
   }
 
-  static public function devolverNumeroPersonajesDeCadaRaza(): string
+  public function __toString(): string
   {
-    $personajesDeCadaRaza = [];
-    foreach (self::$personajes as $personaje) {
-      foreach (RazaDBZ::cases() as $raza) {
-        if ($personaje->raza == $raza) {
-          $personajesDeCadaRaza[$raza->value] = count(self::$personajes);
-        }
-      }
-    }
-    return implode(", ", $personajesDeCadaRaza);
+    return "Nombre: $this->nombre\nEdad: $this->edad";
   }
 }
 
 
-$personaje1 = new PersonajeDBZ("Goku", 100, RazaDBZ::SuperGuerrer, ["Kamehameha" => 500, "SuperKamehameha" => 1000]);
+$goku = new GuerreroZ("Goku", 24, ["kamehameha", "kamehameha", "kamehameha", "kamehameha", "kamehameha"], Raza::HUMANO);
 
-
-$personaje2 = new PersonajeDBZ("Vegeta", 100, RazaDBZ::SuperGuerrer, ["Kamehameha" => 500, "SuperKamehameha" => 1000]);
-
-echo $personaje1->obtenerElAtaqueMasFuerte();
+echo $goku;
 
 echo '<br>';
 
-echo PersonajeDBZ::devolverNumeroPersonajesDeCadaRaza();
+$corpetit = new GuerreroZ('CorPetit', 400, ['QueTeMatoNiño' => 1000], Raza::NAMEKIANO);
+
+
+$corpegran = new GuerreroZ('CorGran', 400, ['QueTeMatoNiño' => 1000], Raza::NAMEKIANO);
+
+print_r(GuerreroZ::cuantosPersonajesPorRaza());
