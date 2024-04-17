@@ -69,6 +69,10 @@ $goku = new GuerreroZ("Goku", 17, Raza::Humano, ["KameHame" => 100, "SuperKameHa
 $vegeta = new GuerreroZ("Vegeta", 17, Raza::Humano, ["CanoGarlick" => 100, "FinalFlash" => 500]);
 echo $goku;
 
+echo '<br>';
+
+echo $goku->mostrarAtaqueMasFuerte();
+
 echo PlanetaVegeta::registrarGuerrero($goku);
 echo PlanetaVegeta::registrarGuerrero($vegeta);
 
