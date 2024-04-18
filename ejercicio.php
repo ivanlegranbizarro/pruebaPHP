@@ -51,7 +51,7 @@ class GuerreroZ
     $conteoPersonajes = [];
     foreach (self::$guerreros as $guerrero) {
       $razaActual = $guerrero->raza->value;
-      if (isset($conteoPersonajes[$razaActual])) {
+      if ($conteoPersonajes[$razaActual]) {
         $conteoPersonajes[$razaActual]++;
       } else {
         $conteoPersonajes[$razaActual] = 1;

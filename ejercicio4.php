@@ -5,81 +5,77 @@
 2) Un método para que se recuenten los guerreros según su raza */
 
 
-enum RazaDeGuerrer: string
+enum RazaGuererosZ: string
 {
   case Humano = 'Humano';
-  case GuerrerEspai = 'GuerrerEspai';
   case Namekiano = 'Namekiano';
+  case SuperGuerrer = 'SuperGuerrer';
   case Androide = 'Androide';
-  case DiosDeLaLucha = 'DiosDeLaLucha';
+  case DiosDeLaDestruccion = 'DiosDeLaDestruccion';
 }
 
-class GuerrerDelEspai
-{
 
-  public function __construct(public string $nombre, public int $edad, public RazaDeGuerrer $raza, public array $ataques)
-  {
+class SoldatZ
+{
+  public function __construct(
+    public string $nombre,
+    public int $edad,
+    public RazaGuererosZ $raza,
+    public array $ataques
+  ) {
   }
 
-  public function mostrarAtaqueMasFuerte(): string
+  public function retornarAtacMesFort(): string
   {
-    $poderMayor = 0;
-
+    $poder = 0;
     foreach ($this->ataques as $nombre => $poderAtaque) {
-      if ($poderAtaque > $poderMayor) {
-        $poderMayor = $poderAtaque;
+      if ($poderAtaque > $poder) {
+        $poder = $poderAtaque;
       }
     }
-    return "El mayor ataque es {$nombre} y si daño es {$poderAtaque}";
+    return "El ataque $nombre es el más poderoso con $poder de daño";
   }
-
 
   public function __toString(): string
   {
-    return $this->nombre;
+    return "El nom del soldat és $this->nombre";
   }
 }
 
 
-$goku = new GuerrerDelEspai('SonGoku', 35, RazaDeGuerrer::GuerrerEspai, ['KameHame' => 500, 'SuperKameHame' => 1000, 'BolaGenki' => 10000]);
+$guerrer1 = new SoldatZ('Goku', 35, RazaGuererosZ::SuperGuerrer, ['Kame' => 500, 'SuperKame' => 1000, 'BolaGenki' => 10000]);
 
 
-echo $goku;
+echo $guerrer1;
 
 
-class PoblacionGuerrersZ
+class PoblacioSoldats
 {
+  static public array $soldatsAllistats = [];
 
-  static public array $poblacion = [];
-
-  static public function reclutarGuerrero(GuerrerDelEspai $guerrer): void
+  static public function allistarSoldat(SoldatZ $soldat): void
   {
-    self::$poblacion[] = $guerrer;
+    self::$soldatsAllistats[] = $soldat;
   }
 
-  static public function recontarGuerreroSegunRaza(): array|string
+  static public function recuentoRazaSegunSoldadosAlistados(): array
   {
-    if (!empty(self::$poblacion)) {
-      $todasLasRazas = [];
-      foreach (RazaDeGuerrer::cases() as $raza) {
-        $todasLasRazas[$raza->value] = 0;
+    $conteoPersonajes = [];
+    foreach (self::$soldatsAllistats as $soldat) {
+      $razaActual = $soldat->raza->value;
+      if ($conteoPersonajes[$razaActual]) {
+        $conteoPersonajes[$razaActual]++;
+      } else {
+        $conteoPersonajes[$razaActual] = 1;
       }
-      foreach (self::$poblacion as $guerrero) {
-        $razaActual = $guerrero->raza->value;
-        if ($todasLasRazas[$razaActual]) {
-          $todasLasRazas[$razaActual]++;
-        } else {
-          $todasLasRazas[$razaActual] = 1;
-        }
-      }
-      return $todasLasRazas;
     }
-    return 'No hay guerreros en la población';
+    return $conteoPersonajes;
   }
 }
 
-PoblacionGuerrersZ::reclutarGuerrero($goku);
+
+PoblacioSoldats::allistarSoldat($guerrer1);
 
 echo '<br>';
 
-print_r(PoblacionGuerrersZ::recontarGuerreroSegunRaza());
+print_r(PoblacioSoldats::recuentoRazaSegunSoldadosAlistados());
