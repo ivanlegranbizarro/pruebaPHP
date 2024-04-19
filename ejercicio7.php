@@ -8,6 +8,7 @@ enum GeneroLiterario: string
   case Biografía = 'Biografía';
   case Poesia = 'Poesía';
   case Fantasia = 'Fantasía';
+  case Documental = 'Documental';
 }
 
 class Libro

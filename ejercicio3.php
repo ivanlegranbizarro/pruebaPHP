@@ -1,81 +1,86 @@
 <?php
-
 /* Crear guerrero zeta con nombre, edad, raza, ataques.
 1) Un método para que cada personaje devuelva su ataque más fuerte
 2) Un método para que se recuenten los guerreros según su raza */
 
 
-enum RazaDeGuerrer: string
+enum RazasGT: string
 {
   case Humano = 'Humano';
-  case GuerrerEspai = 'GuerrerEspai';
   case Namekiano = 'Namekiano';
   case Androide = 'Androide';
-  case DiosDeLaLucha = 'DiosDeLaLucha';
+  case SuperGuerrer = 'SuperGuerrer';
 }
 
-class GuerrerDelEspai
+class GuerrerosGT
 {
-
-  public function __construct(public string $nombre, public int $edad, public RazaDeGuerrer $raza, public array $ataques)
+  public function __construct(public string $nombre, public int $edad, public RazasGT $raza, public array $ataques)
   {
   }
 
-  public function mostrarAtaqueMasFuerte(): string
+  public function atacMesPoderos(): string
   {
-    $poderMayor = 0;
-
-    foreach ($this->ataques as $nombre => $poderAtaque) {
-      if ($poderAtaque > $poderMayor) {
-        $poderMayor = $poderAtaque;
+    $poder = 0;
+    foreach ($this->ataques as $nomAtac => $poderAtac) {
+      if ($poderAtac > $poder) {
+        $poder = $poderAtac;
       }
     }
-    return "El mayor ataque es {$nombre} y si daño es {$poderAtaque}";
+    return "El nombre del ataque es $nomAtac y su poder es $poder de daño";
   }
 
   public function __toString(): string
   {
-    return $this->nombre;
+    return "El guerrero se llama $this->nombre";
   }
 }
-
-$goku = new GuerrerDelEspai('SonGoku', 35, RazaDeGuerrer::GuerrerEspai, ['KameHame' => 500, 'SuperKameHame' => 1000, 'BolaGenki' => 10000]);
-
-echo $goku;
-
-class PoblacionGuerrersZ
+class PlanetaDeGuerrers
 {
 
-  static public array $poblacion = [];
-
-  static public function reclutarGuerrero(GuerrerDelEspai $guerrer): void
+  public function __construct(public string $nombre, public array $guerrerosDelPlaneta = [])
   {
-    self::$poblacion[] = $guerrer;
   }
 
-  static public function recontarGuerreroSegunRaza(): array|string
+  public function enregistrarGuerrer(GuerrerosGT $guerrero): void
   {
-    if (!empty(self::$poblacion)) {
-      $todasLasRazas = [];
-      foreach (RazaDeGuerrer::cases() as $raza) {
-        $todasLasRazas[$raza->value] = 0;
-      }
-      foreach (self::$poblacion as $guerrero) {
-        $razaActual = $guerrero->raza->value;
-        if ($todasLasRazas[$razaActual]) {
-          $todasLasRazas[$razaActual]++;
-        } else {
-          $todasLasRazas[$razaActual] = 1;
-        }
-      }
-      return $todasLasRazas;
+    $this->guerrerosDelPlaneta[] = $guerrero;
+  }
+
+  public function contarRazasDeGuerreros(): array
+  {
+    $razaDeGuerreros = [];
+
+    foreach (RazasGT::cases() as $razas) {
+      $razaDeGuerreros[$razas->value] = 0;
     }
-    return 'No hay guerreros en la población';
+
+    foreach ($this->guerrerosDelPlaneta as $guerrero) {
+      $razaActual = $guerrero->raza->value;
+      if (isset($razaDeGuerreros[$razaActual])) {
+        $razaDeGuerreros[$razaActual]++;
+      }
+    }
+
+    return $razaDeGuerreros;
   }
 }
 
-PoblacionGuerrersZ::reclutarGuerrero($goku);
+$vegeta = new GuerrerosGT('Vegeta', 37, RazasGT::SuperGuerrer, ['Cano Galick' => 500, 'Final Flash' => 900]);
+
+$reyVegeta = new GuerrerosGT('Rey Vegeta', 57, RazasGT::SuperGuerrer, ['Cano Galick' => 500, 'Final Flash' => 900]);
+
+echo $vegeta;
 
 echo '<br>';
 
-print_r(PoblacionGuerrersZ::recontarGuerreroSegunRaza());
+echo $vegeta->atacMesPoderos();
+
+echo '<br>';
+
+$planeta1 = new PlanetaDeGuerrers('Planeta Vegeta');
+
+$planeta1->enregistrarGuerrer($vegeta);
+$planeta1->enregistrarGuerrer($reyVegeta);
+
+
+print_r($planeta1->contarRazasDeGuerreros());
