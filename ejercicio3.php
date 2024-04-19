@@ -33,19 +33,15 @@ class GuerrerDelEspai
     return "El mayor ataque es {$nombre} y si daño es {$poderAtaque}";
   }
 
-
   public function __toString(): string
   {
     return $this->nombre;
   }
 }
 
-
 $goku = new GuerrerDelEspai('SonGoku', 35, RazaDeGuerrer::GuerrerEspai, ['KameHame' => 500, 'SuperKameHame' => 1000, 'BolaGenki' => 10000]);
 
-
 echo $goku;
-
 
 class PoblacionGuerrersZ
 {

@@ -5,22 +5,22 @@
 2) Un método para que se recuenten los guerreros según su raza */
 
 
-enum RazaDBZ: string
+enum RazaGuerreros: string
 {
   case Humano = 'Humano';
   case Namekiano = 'Namekiano';
-  case SuperGuerrer = 'SuperGuerrer';
   case Androide = 'Androide';
-  case DiosDeLaGuerra = 'DiosDeLaGuerra';
+  case SuperGuerrer = 'SuperGuerrer';
 }
 
-class GZ
+class GuerrerosDeDragonBallZeta
 {
-  public function __construct(public string $nombre, public int $edad, public RazaDBZ $raza, public array $ataques)
+
+  public function __construct(public string $nombre, public int $edad, public RazaGuerreros $raza, public array $ataques)
   {
   }
 
-  public function mayorPoder(): string
+  public function ataqueMasPoderoso(): string
   {
     $poder = 0;
     foreach ($this->ataques as $nombreAtaque => $poderAtaque) {
@@ -28,51 +28,58 @@ class GZ
         $poder = $poderAtaque;
       }
     }
-    return "El ataque más poderoso es $nombreAtaque con $poder de daños";
+    return "El ataque más poderoso es $nombreAtaque con $poder de daño";
   }
 
-  public function __toString(): string
+  public function __toString()
   {
-    return "Nombre: $this->nombre";
+    return "El nombre del personaje es: $this->nombre";
   }
 }
 
 
-class GZS
+$goku = new GuerrerosDeDragonBallZeta('Goku', 35, RazaGuerreros::SuperGuerrer, ['KameHame' => 500, 'SuperKameHame' => 1000, 'BolaGenki' => 10000]);
+
+
+echo $goku;
+
+echo '<br>';
+
+echo $goku->ataqueMasPoderoso();
+
+
+class ReclutasZ
 {
-  static public array $guerrersAllistats = [];
 
+  static array $reclutas = [];
 
-  static public function allistarGuerrer(GZ $guerrer)
+  static public function addRecluta(GuerrerosDeDragonBallZeta $guerrero): void
   {
-    self::$guerrersAllistats[] = $guerrer;
+    self::$reclutas[] = $guerrero;
   }
 
-  static public function recompteGuerrersSegonsRaça(): array
+  static public function recuentoPorRazasReclutadas(): array|string
   {
-    if (!empty(self::$guerrersAllistats)) {
-      $razasEncontradas = [];
-      foreach (self::$guerrersAllistats as $guerrer) {
-        $razaActual = $guerrer->raza->value;
-        if (isset($razasEncontradas[$razaActual])) {
-          $razasEncontradas[$razaActual]++;
+    if (!empty(self::$reclutas)) {
+      $razasReclutadas = [];
+      foreach (self::$reclutas as $recluta) {
+        $razaActual = $recluta->raza->value;
+        if ($razasReclutadas[$razaActual]) {
+          $razasReclutadas[$razaActual]++;
         } else {
-          $razasEncontradas[$razaActual] = 1;
+          $razasReclutadas[$razaActual] = 1;
         }
       }
-      return $razasEncontradas;
+      return $razasReclutadas;
     }
+
+    return 'Lo sentimos, aún no hay reclutas';
   }
 }
 
-$guerreroz = new GZ('Vegeta', 37, RazaDBZ::SuperGuerrer, ['Galic Attack' => 500, 'Final Flash' => 1000]);
 
-echo $guerreroz;
-
-echo '<br>';
-
-GZS::allistarGuerrer($guerreroz);
+ReclutasZ::addRecluta($goku);
 
 echo '<br>';
 
-print_r(GZS::recompteGuerrersSegonsRaça());
+print_r(ReclutasZ::recuentoPorRazasReclutadas());
