@@ -53,17 +53,13 @@ class Libreria
   }
 }
 
-
 $libro1 = new Libro('El Señor de los anillos', 'JRR Tolkien');
-
 
 echo $libro1;
 
 echo '<br>';
 
-
 $libreriaDocumenta = new Libreria('Documenta');
-
 
 $libreriaDocumenta->addLibro($libro1);
 
